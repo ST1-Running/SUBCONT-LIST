@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Component & Process Sheet - Soft Pastel Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--panel:#ffffff;--bg:#f8fafc;
+  --brand:#4f46e5;--brand-hover:#4338ca;--brand-soft:#eef2ff;
+  --brand-gradient:linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --success-bg:#f0fdf4;--success-text:#166534;--danger-bg:#fff1f2;--danger-text:#9f1239;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.04);
+  --shadow-card:0 10px 30px -5px rgba(99, 102, 241, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.02);
+  --radius:16px;--radius-sm:10px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased}
+.app-header{background:var(--brand-gradient);color:white;padding:30px max(24px, calc((100vw - 1440px)/2));box-shadow:0 4px 20px rgba(99, 102, 241, 0.15);position:relative}
+.header-inner{max-width:1440px;margin:auto;display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;opacity:.9;margin-bottom:6px;background:rgba(255,255,255,0.15);padding:3px 10px;border-radius:20px;display:inline-block}
+h1{font-size:clamp(22px, 2.5vw, 30px);margin:0 0 6px;letter-spacing:-0.5px;font-weight:700}
+.header-copy{margin:0;color:#e0e7ff;font-size:13.5px;line-height:1.5;max-width:600px;font-weight:400}
+.header-badge{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);font-size:12px;font-weight:600;backdrop-filter:blur(5px)}
+main{max-width:1440px;margin:24px auto 48px;padding:0 24px}
+.top-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,340px);gap:20px;align-items:start}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-card)}
+.control-panel{padding:20px;margin-bottom:20px}
+.panel-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}
+.panel-head h2{font-size:16px;margin:0;font-weight:700}
+.subtext{font-size:12.5px;color:var(--muted);line-height:1.5;margin:4px 0 0}
+.action-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+button{font:inherit;cursor:pointer;border:0;border-radius:var(--radius-sm);padding:10px 16px;font-weight:600;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px;font-size:13px}
+button:hover{transform:translateY(-1px);filter:brightness(1.02)}
+button:active{transform:translateY(0)}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 2px 8px rgba(79, 70, 229, 0.2)}
+.btn-primary:hover{background:var(--brand-hover)}
+.btn-success{background:var(--success-text);color:#fff}
+.btn-outline{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.btn-outline:hover{background:var(--bg)}
+.btn-calm-danger{background:var(--danger-bg);color:var(--danger-text);border:1px solid #fecdd3}
+.btn-calm-danger:hover{background:#ffe4e6}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px}
+.stat .label{font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:600;text-transform:uppercase}
+.stat .value{font-size:18px;font-weight:700;color:var(--brand)}
+.workflow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.step{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:6px;font-weight:600}
+.step-num{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--muted);font-weight:700;font-size:11px}
+.step.active .step-num{background:var(--brand-soft);color:var(--brand)}
+.step.active{color:var(--brand)}
+.step-line{height:1px;width:16px;background:var(--line)}
+.tip{border-radius:var(--radius-sm);background:var(--brand-soft);color:#312e81;padding:12px 14px;font-size:12.5px;line-height:1.5;margin-top:16px;border-left:3px solid var(--brand);font-weight:500}
+.tip strong{color:var(--brand-hover)}
+.saved-panel{padding:20px;position:sticky;top:20px}
+.saved-header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.saved-header h2{font-size:16px;margin:0;font-weight:700}
+.counter{background:var(--brand-soft);color:var(--brand);font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:20px}
+.saved-list{display:flex;flex-direction:column;gap:8px;margin-top:14px;max-height:320px;overflow:auto;padding-right:2px}
+.saved-list::-webkit-scrollbar{width:4px}
+.saved-list::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+.saved-empty{border:1px dashed var(--line);border-radius:var(--radius-sm);padding:20px 12px;text-align:center;color:var(--muted);font-size:12.5px;line-height:1.5}
+.saved-item{border:1px solid var(--line);border-radius:var(--radius-sm);padding:10px 12px;display:flex;gap:10px;align-items:center;cursor:pointer;transition:all .15s;background:#fff}
+.saved-item:hover{background:var(--bg);border-color:#cbd5e1}
+.saved-item.editing{border-color:var(--brand);background:var(--brand-soft)}
+.saved-icon{width:32px;height:36px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-size:11px;font-weight:700;flex-shrink:0}
+.saved-info{min-width:0;flex:1}
+.saved-info strong{display:block;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink);font-weight:700}
+.saved-info span{font-size:11px;color:var(--muted);display:block;margin-top:2px}
+.saved-item button{padding:5px 8px;font-size:11px;background:var(--danger-bg);color:var(--danger-text);border-radius:6px}
+.saved-actions{display:grid;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.preview-title{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:20px 0 12px}
+.preview-title h2{margin:0;font-size:16px;font-weight:700}
+.preview-title span{font-size:12px;color:var(--muted)}
+.sheet-wrap{width:100%;overflow:hidden;padding:2px}
+#sheet{
+  width: 100%; max-width: 100%; aspect-ratio: 297 / 210; margin: 0 auto;
+  padding: 8mm 10mm 15mm; background: #fff; box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr));
+  box-sizing: border-box; border-radius: 6px; border: 1px solid #cbd5e1;
+}
+.cell{border:.25mm solid #334155;min-width:0;min-height:0;padding:1.5mm 2mm;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;background:white}
+.field{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:4px;font-size:clamp(7px, 0.85vw, 10pt);line-height:1.15;position:relative;}
+.field label{white-space:nowrap;color:#334155;font-weight:600}
+.field input, .field select{
+  width:100%; min-width:0; border:0; border-bottom:1px dotted #cbd5e1; background:transparent;
+  padding:0 1px 1px; outline:none; font-family:inherit; font-size:inherit; font-weight:700; color:#0f172a; border-radius:0;
+}
+.field input:focus, .field select:focus{border-bottom:1.5px solid var(--brand);background:var(--brand-soft)}
+.color-dropdown{
+  position:absolute;top:100%;left:0;right:0;max-height:150px;overflow-y:auto;
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);
+  box-shadow:0 10px 25px rgba(15,23,42,0.1);z-index:99;display:none;padding:4px;
+}
+.color-dropdown::-webkit-scrollbar{width:4px}
+.color-dropdown::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+.color-dropdown div{
+  padding:7px 10px;font-size:11.5px;font-weight:600;cursor:pointer;border-radius:6px;
+  transition:all .12s ease;display:flex;align-items:center;justify-content:space-between;color:#334155;
+}
+.color-dropdown div:hover{background:var(--brand-soft);color:var(--brand);font-weight:700}
+.image-area-wrap{display:flex;flex-direction:column;gap:3px;margin-top:1.2mm;}
+.image-area{height:20mm;min-height:12px;border:1px dashed #cbd5e1;border-radius:6px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#fafafc;cursor:pointer;transition:all .15s}
+.image-area:hover{border-color:var(--brand);background:var(--brand-soft)}
+.image-area img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block}
+.placeholder{padding:4px;text-align:center;color:#94a3b8;font-size:clamp(6px, 0.75vw, 8.5px);line-height:1.2;font-weight:500}
+.image-tools{position:absolute;right:3px;top:3px;display:flex;gap:3px}
+.image-tools button{padding:2px 5px;font-size:8.5px;border-radius:4px;background:#fff;border:1px solid var(--line);color:#334155;font-weight:600}
+.btn-clear-cell{
+  width: 100%; padding: 4px; font-size: 8.5px; font-weight: 700; border-radius: 5px;
+  background: var(--danger-bg); border: 1px solid #fecdd3; color: var(--danger-text); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 4px; transition: all .15s;
+}
+.btn-clear-cell:hover{background:#fee2e2;transform:none}
+
+#printPages{display:none}
+.footer-note{text-align:center;font-size:11.5px;color:var(--muted);margin:14px 0;font-weight:500}
+
+@media(max-width:1000px){.top-layout{grid-template-columns:1fr}.saved-panel{position:static}.saved-list{max-height:220px}}
+@media(max-width:700px){main{padding:0 12px;margin-top:12px}.app-header{padding:20px 16px}.control-panel,.saved-panel{padding:14px}.stats{grid-template-columns:repeat(3,1fr)}.stat{padding:8px}.stat .value{font-size:16px}.sheet-wrap{margin:0 -12px}#sheet{margin-left:0;margin-right:0}}
+
+@page{size:A4 landscape;margin:0}
+@media print{
+  html,body{margin:0!important;padding:0!important;background:#fff!important;width:297mm}
+  .app-header,main,.footer-note{display:none!important}
+  #printPages{display:block!important}
+  .print-sheet{width:297mm;height:210mm;padding:8mm 10mm 15mm;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));background:white;page-break-after:always;break-after:page;overflow:hidden;box-sizing:border-box;}
+  .print-sheet:last-child{page-break-after:auto;break-after:auto}
+  .print-cell{border:.25mm solid #334155;min-width:0;min-height:0;padding:1.5mm 2mm;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box;}
+  .print-field{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px;align-items:baseline;font-size:9.5pt;line-height:1.15}
+  .print-field label{white-space:nowrap;font-weight:600;color:#0f172a}
+  .print-value{min-width:0;overflow-wrap:anywhere;white-space:pre-wrap;border-bottom:1px dotted #cbd5e1;font-size:inherit;font-weight:700;color:#0f172a}
+  .print-image{height:22mm;min-height:10mm;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .print-image img{max-width:100%;max-height:100%;object-fit:contain}
+}
+</style>
+</head>
+<body>
+<header class="app-header">
+  <div class="header-inner">
+    <div>
+      <div class="eyebrow">SAMPLE TEAM 1 RUNNING</div>
+      <h1>SUBCONT LIST FORM</h1>
+      <p class="header-copy">Input data komponen, lampirkan gambar, lalu simpan setiap batch sebagai satu halaman A4 dengan antarmuka yang bersih dan menenangkan.</p>
+    </div>
+    <div class="header-badge"><span>▦</span> A4 Landscape <span>•</span> 8 item / halaman</div>
+  </div>
+</header>
+<main>
+  <div class="top-layout">
+    <div>
+      <section class="panel control-panel">
+        <div class="panel-head">
+          <div><h2>Input halaman saat ini</h2><p class="subtext" id="panelSubtext">Isi sampai 8 kotak. Klik item di daftar samping untuk mengedit kembali halaman tersimpan.</p></div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="label">Halaman tersimpan</div><div class="value" id="savedCount">0</div></div>
+          <div class="stat"><div class="label">Kotak terisi di halaman ini</div><div class="value" id="filledCount">0 / 8</div></div>
+          <div class="stat"><div class="label">Total kotak tersimpan</div><div class="value" id="totalCount">0</div></div>
+        </div>
+        <div class="action-row">
+          <button class="btn-success" id="finishBtn" type="button">✓ Selesai &amp; halaman baru</button>
+          <button class="btn-primary" id="pdfCurrentBtn" type="button">⇩ Export Halaman ini ke PDF</button>
+          <button class="btn-calm-danger" id="newBtn" type="button">🗑️ Kosongkan input saat ini</button>
+        </div>
+        <div class="workflow">
+          <div class="step active"><span class="step-num">1</span> Input data</div><div class="step-line"></div>
+          <div class="step"><span class="step-num">2</span> Selesai &amp; simpan</div><div class="step-line"></div>
+          <div class="step"><span class="step-num">3</span> Gabungkan PDF</div>
+        </div>
+        <div class="tip"><strong>Mode Edit:</strong> Klik halaman pada panel samping untuk mengeditnya. Tombol utama akan berubah menjadi "Update Halaman Saat Ini" secara otomatis.</div>
+      </section>
+      <div class="preview-title"><h2>Preview lembar A4</h2><span>Halaman aktif · 4 kolom × 2 baris (Responsif)</span></div>
+      <div class="sheet-wrap"><div id="sheet" aria-label="Lembar input A4"></div></div>
+      <p class="footer-note">Copyright Sample Team 1 Running @ 2026</p>
+    </div>
+    <aside class="panel saved-panel">
+      <div class="saved-header"><h2>Halaman tersimpan</h2><span class="counter" id="savedBadge">0 halaman</span></div>
+      <p class="subtext">Klik halaman di bawah untuk memuat dan mengedit kembali datanya.</p>
+      <div class="saved-list" id="savedList"></div>
+      <div class="saved-actions">
+        <button class="btn-primary" id="pdfSideBtn" type="button">Export gabungan PDF</button>
+        <button class="btn-outline" id="saveJsonBtn" type="button">Export Data (.json)</button>
+        <button class="btn-outline" id="loadJsonBtn" type="button">Pulihkan Data (.json)</button>
+        <button class="btn-danger" id="clearAllBtn" type="button" style="background:var(--danger-bg);color:var(--danger-text);border:1px solid #fecdd3;padding:10px 16px;border-radius:var(--radius-sm);font-weight:600;cursor:pointer">Hapus semua halaman tersimpan</button>
+        <input id="jsonFile" type="file" accept="application/json,.json" hidden>
+      </div>
+    </aside>
+  </div>
+</main>
+<div id="printPages"></div>
+
+<!-- Google Visualization API Script Injection -->
+<script>
+  let COLORO_DATABASE = [];
+  let isDataLoaded = false;
+  let activeDropdownRenderer = null;
+
+  window.handleSpreadsheetData = function(json) {
+    try {
+      const rows = json.table.rows;
+      COLORO_DATABASE = rows.map(r => {
+        const name = r.c && r.c[0] ? r.c[0].v : "";
+        const code = r.c && r.c[1] ? r.c[1].v : "";
+        return { name: String(name).trim(), code: String(code).trim() };
+      }).filter(item => item.name && item.code);
+      
+      isDataLoaded = true;
+      if (typeof activeDropdownRenderer === "function") {
+        activeDropdownRenderer();
+      }
+    } catch(e) {
+      console.error("Gagal menyinkronkan data spreadsheet:", e);
+    }
+  };
+
+  function fetchLiveColoroData() {
+    const oldScript = document.getElementById("gviz-script");
+    if(oldScript) oldScript.remove();
+
+    const script = document.createElement("script");
+    script.id = "gviz-script";
+    const docId = "1jGFnDTAKKexeODhLQ8zNbEw_iaz48xy5o0jB2GzTCLk";
+    const gid = "959748163";
+    script.src = `https://docs.google.com/spreadsheets/d/${docId}/gviz/tq?tqx=responseHandler:handleSpreadsheetData&gid=${gid}&_=${Date.now()}`;
+    document.body.appendChild(script);
+  }
+
+  fetchLiveColoroData();
+</script>
+
+<script>
+(() => {
+  const FIELD_NAMES = ["Article","Size","Stage","Season","Component","Process","Color","QTY","Supplier"];
+  const STAGE_OPTIONS = ["PROTO 0", "GTM 1", "GTM 2", "LINE CFM", "RELINE CFM", "PROD CFM", "PULLOVER"];
+  const SUPPLIER_OPTIONS = ["INHOUSE", "CBMJ", "SUJA", "TLI", "TSI", "JINGXING", "HONGSUNG"];
+  
+  let current = makeBlankPage();
+  let savedPages = [];
+  let editingIndex = null;
+  let activeCell = 0;
+  const sheet = document.getElementById("sheet");
+
+  function makeBlankPage(){return {cells:Array.from({length:8},()=>({values:{},image:null}))};}
+  function cellHasData(cell){return FIELD_NAMES.some(k => (cell?.values?.[k]||"").trim()) || !!cell?.image;}
+  function pageHasData(page){return page?.cells?.some(cellHasData);}
+  function filledCells(page){return page?.cells?.filter(cellHasData).length || 0;}
+
+  function refreshUI(){
+    updateStats(); 
+    renderSavedList();
+    updateFinishButtonState();
+  }
+
+  function updateFinishButtonState() {
+    const finishBtn = document.getElementById("finishBtn");
+    const subtext = document.getElementById("panelSubtext");
+    if(editingIndex !== null) {
+      finishBtn.textContent = "💾 Update Halaman Saat Ini";
+      finishBtn.className = "btn-primary";
+      subtext.textContent = `Sedang mengedit Halaman ${editingIndex + 1}. Klik Update untuk menyimpan perubahan tanpa membuat halaman baru.`;
+    } else {
+      finishBtn.textContent = "✓ Selesai & halaman baru";
+      finishBtn.className = "btn-success";
+      subtext.textContent = "Isi sampai 8 kotak. Klik item di daftar samping untuk mengedit kembali halaman tersimpan.";
+    }
+  }
+
+  function syncCommonFields(fieldName, val) {
+    if(["Article", "Size", "Stage", "Season"].includes(fieldName)) {
+      current.cells.forEach((c, idx) => {
+        c.values[fieldName] = val;
+        const inputEl = sheet.querySelector(`.cell:nth-child(${idx + 1}) [aria-label$="${fieldName}"]`);
+        if(inputEl && inputEl !== document.activeElement) {
+          inputEl.value = val;
+        }
+      });
+      refreshUI();
+    }
+  }
+
+  function renderEditor(){
+    sheet.innerHTML="";
+    current.cells.forEach((cell,index)=>{
+      const box=document.createElement("section");box.className="cell";
+      FIELD_NAMES.forEach(name=>{
+        const row=document.createElement("div");row.className="field";
+        const label=document.createElement("label");label.textContent=name+" :";
+        
+        let input;
+        if(name === "Supplier") {
+          input=document.createElement("select");
+          input.setAttribute("aria-label",`Kotak ${index+1} ${name}`);
+          
+          const defaultOpt = document.createElement("option");
+          defaultOpt.value = "";
+          defaultOpt.textContent = "-- Pilih Supplier --";
+          defaultOpt.disabled = true;
+          defaultOpt.selected = !cell.values[name];
+          input.append(defaultOpt);
+
+          SUPPLIER_OPTIONS.forEach(optVal => {
+            const opt = document.createElement("option");
+            opt.value = optVal;
+            opt.textContent = optVal;
+            if(cell.values[name] === optVal) opt.selected = true;
+            input.append(opt);
+          });
+
+          input.addEventListener("change",()=>{cell.values[name]=input.value;refreshUI();});
+        }
+        else if(name === "Stage") {
+          input=document.createElement("select");
+          input.setAttribute("aria-label",`Kotak ${index+1} ${name}`);
+          
+          const defaultOpt = document.createElement("option");
+          defaultOpt.value = "";
+          defaultOpt.textContent = "-- Pilih Stage --";
+          defaultOpt.disabled = true;
+          defaultOpt.selected = !cell.values[name];
+          input.append(defaultOpt);
+
+          STAGE_OPTIONS.forEach(optVal => {
+            const opt = document.createElement("option");
+            opt.value = optVal;
+            opt.textContent = optVal;
+            if(cell.values[name] === optVal) opt.selected = true;
+            input.append(opt);
+          });
+
+          input.addEventListener("change",()=>{
+            cell.values["Stage"] = input.value;
+            syncCommonFields("Stage", input.value);
+          });
+        }
+        else if(name === "Article") {
+          input=document.createElement("input");
+          input.type="text";
+          input.value=cell.values[name]||"";
+          input.autocomplete="off";
+          input.setAttribute("aria-label",`Kotak ${index+1} ${name}`);
+
+          input.addEventListener("input",()=>{
+            const val = input.value;
+            cell.values[name] = val;
+
+            if(val.length > 0) {
+              const firstChar = val.charAt(0).toUpperCase();
+              let autoSize = "";
+              if(firstChar === "M") autoSize = "9TD";
+              else if(firstChar === "W") autoSize = "7B";
+              else if(firstChar === "G") autoSize = "4M";
+              else if(firstChar === "P") autoSize = "13M";
+              else if(firstChar === "I") autoSize = "5M";
+              else if(firstChar === "U") autoSize = "8D";
+
+              if(autoSize) {
+                current.cells.forEach((c, idx) => {
+                  c.values["Size"] = autoSize;
+                  c.values["Article"] = val;
+                  const sizeInput = sheet.querySelector(`.cell:nth-child(${idx + 1}) input[aria-label$="Size"]`);
+                  if(sizeInput) sizeInput.value = autoSize;
+                });
+              }
+            }
+
+            syncCommonFields("Article", val);
+          });
+        }
+        else if(name === "Size") {
+          input=document.createElement("input");
+          input.type="text";
+          input.value=cell.values[name]||"";
+          input.autocomplete="off";
+          input.setAttribute("aria-label",`Kotak ${index+1} ${name}`);
+          input.addEventListener("input",()=>{
+            cell.values[name] = input.value;
+            syncCommonFields("Size", input.value);
+          });
+        }
+        else if(name === "Season") {
+          input=document.createElement("input");
+          input.type="text";
+          input.value=cell.values[name]||"";
+          input.autocomplete="off";
+          input.setAttribute("aria-label",`Kotak ${index+1} ${name}`);
+          input.addEventListener("input",()=>{
+            cell.values[name] = input.value;
+            syncCommonFields("Season", input.value);
+          });
+        }
+        else if(name === "Color") {
+          input=document.createElement("input");
+          input.type="text";
+          input.value=cell.values[name]||"";
+          input.autocomplete="off";
+          input.placeholder="Cari Coloro...";
+          input.setAttribute("aria-label",`Kotak ${index+1} ${name}`);
+          
+          const dropdown = document.createElement("div");
+          dropdown.className = "color-dropdown";
+
+          const populateDropdown = (query = "") => {
+            dropdown.innerHTML = "";
+            
+            if (!isDataLoaded || COLORO_DATABASE.length === 0) {
+              const loadingDiv = document.createElement("div");
+              loadingDiv.textContent = "Memuat data live...";
+              loadingDiv.style.color = "#888";
+              dropdown.append(loadingDiv);
+              dropdown.style.display = "block";
+              return;
+            }
+
+            const q = query.toLowerCase().trim();
+            const filtered = COLORO_DATABASE.filter(item => 
+              item.name.toLowerCase().includes(q) || item.code.toLowerCase().includes(q)
+            );
+
+            if(filtered.length === 0) {
+              const noRes = document.createElement("div");
+              noRes.textContent = "Data tidak ditemukan";
+              noRes.style.color = "#999";
+              dropdown.append(noRes);
+              dropdown.style.display = "block";
+              return;
+            }
+
+            const suggestions = filtered.slice(0, 5);
+
+            suggestions.forEach(item => {
+              const opt = document.createElement("div");
+              const fullText = `${item.name} - ${item.code}`;
+              opt.innerHTML = `<span>${item.name}</span><strong style="color:var(--brand);">${item.code}</strong>`;
+              opt.addEventListener("mousedown", (e) => {
+                e.preventDefault();
+                input.value = fullText;
+                cell.values[name] = fullText;
+                dropdown.style.display = "none";
+                refreshUI();
+              });
+              dropdown.append(opt);
+            });
+            dropdown.style.display = "block";
+          };
+
+          input.addEventListener("focus", () => {
+            activeCell = index;
+            fetchLiveColoroData();
+            activeDropdownRenderer = () => populateDropdown(input.value);
+            populateDropdown(input.value);
+          });
+
+          input.addEventListener("input", () => {
+            cell.values[name] = input.value;
+            activeDropdownRenderer = () => populateDropdown(input.value);
+            populateDropdown(input.value);
+            refreshUI();
+          });
+
+          input.addEventListener("blur", () => {
+            setTimeout(() => { dropdown.style.display = "none"; }, 200);
+            activeDropdownRenderer = null;
+          });
+
+          row.append(label, input, dropdown);
+        }
+        else {
+          input=document.createElement("input");input.type="text";input.value=cell.values[name]||"";input.autocomplete="off";input.setAttribute("aria-label",`Kotak ${index+1} ${name}`);
+          input.addEventListener("input",()=>{cell.values[name]=input.value;refreshUI();});
+        }
+
+        if(name !== "Color" && name !== "Supplier" && name !== "Stage") {
+          input.addEventListener("focus",()=>activeCell=index);
+          row.append(label,input);
+        } else if(name === "Supplier") {
+          row.append(label,input);
+        } else if(name === "Stage") {
+          row.append(label,input);
+        }
+        
+        box.append(row);
+      });
+
+      const areaWrap = document.createElement("div");
+      areaWrap.className = "image-area-wrap";
+
+      const area=document.createElement("div");area.className="image-area";area.tabIndex=0;area.dataset.index=index;
+      area.setAttribute("aria-label",`Area gambar kotak ${index+1}. Klik lalu tekan Ctrl+V.`);
+      area.addEventListener("click",()=>{activeCell=index;area.focus();});
+      area.addEventListener("focus",()=>activeCell=index);
+      area.addEventListener("paste",handlePaste);
+      const placeholder=document.createElement("div");placeholder.className="placeholder";placeholder.textContent="▧ Area gambar — klik lalu Ctrl+V";
+      area.append(placeholder);
+      const tools=document.createElement("div");tools.className="image-tools";
+      const paste=document.createElement("button");paste.type="button";paste.textContent="Paste";paste.addEventListener("click",async e=>{e.stopPropagation();activeCell=index;await pasteFromClipboard(index);});
+      const remove=document.createElement("button");remove.type="button";remove.textContent="Hapus";remove.addEventListener("click",e=>{e.stopPropagation();cell.image=null;renderImage(area,cell);refreshUI();});
+      tools.append(paste,remove);area.append(tools);
+      
+      areaWrap.append(area);
+
+      const clearCellBtn=document.createElement("button");clearCellBtn.type="button";clearCellBtn.className="btn-clear-cell";clearCellBtn.textContent="🗑️ Kosongkan Kotak Ini";clearCellBtn.title="Kosongkan isi dan gambar kotak ini";
+      clearCellBtn.addEventListener("click",e=>{
+        e.stopPropagation();
+        current.cells[index] = {values:{}, image:null};
+        renderEditor();
+      });
+      areaWrap.append(clearCellBtn);
+
+      box.append(areaWrap);
+      renderImage(area,cell);
+      sheet.append(box);
+    });
+    refreshUI();
+  }
+  function renderImage(area,cell){
+    area.querySelector("img")?.remove();
+    const ph=area.querySelector(".placeholder");
+    if(cell.image){ph.style.display="none";const img=document.createElement("img");img.src=cell.image;img.alt="Lampiran gambar";area.insertBefore(img,area.querySelector(".image-tools"));}
+    else ph.style.display="";
+  }
+  function setImage(index,blob){
+    if(!blob?.type?.startsWith("image/"))return;
+    const reader=new FileReader();reader.onload=()=>{current.cells[index].image=reader.result;const area=sheet.querySelector(`.image-area[data-index="${index}"]`);if(area)renderImage(area,current.cells[index]);refreshUI();};reader.readAsDataURL(blob);
+  }
+  function handlePaste(event){
+    const items=event.clipboardData?.items;if(!items)return;
+    for(const item of items){if(item.type?.startsWith("image/")){event.preventDefault();setImage(Number(event.currentTarget.dataset.index),item.getAsFile());return;}}
+  }
+  document.addEventListener("paste",event=>{
+    const items=event.clipboardData?.items;if(!items)return;
+    for(const item of items){if(item.type?.startsWith("image/")){if(event.target?.closest?.(".image-area"))return;event.preventDefault();setImage(activeCell,item.getAsFile());return;}}
+  });
+  async function pasteFromClipboard(index){
+    if(!navigator.clipboard?.read){alert("Browser tidak mengizinkan akses clipboard dari tombol. Klik area gambar lalu tekan Ctrl+V.");return;}
+    try{const items=await navigator.clipboard.read();for(const item of items){const type=item.types.find(t=>t.startsWith("image/"));if(type){setImage(index,await item.getType(type));return;}}alert("Clipboard tidak berisi gambar. Salin gambar terlebih dahulu.");}
+    catch(e){alert("Akses clipboard ditolak. Klik area gambar lalu tekan Ctrl+V, atau izinkan akses clipboard.");}
+  }
+  function updateStats(){
+    document.getElementById("savedCount").textContent=savedPages.length;
+    document.getElementById("savedBadge").textContent=`${savedPages.length} halaman`;
+    document.getElementById("filledCount").textContent=`${filledCells(current)} / 8`;
+    document.getElementById("totalCount").textContent=savedPages.reduce((sum,p)=>sum+filledCells(p),0);
+  }
+  function renderSavedList(){
+    const list=document.getElementById("savedList");list.innerHTML="";
+    if(!savedPages.length){const empty=document.createElement("div");empty.className="saved-empty";empty.textContent="Belum ada halaman tersimpan. Setelah input selesai, klik “Selesai & halaman baru”.";list.append(empty);return;}
+    savedPages.forEach((page,i)=>{
+      const item=document.createElement("div");
+      item.className = "saved-item" + (editingIndex === i ? " editing" : "");
+      
+      item.addEventListener("click", (e)=>{
+        if(e.target.tagName === "BUTTON") return;
+        if(pageHasData(current) && editingIndex === null && !confirm("Form saat ini memiliki data aktif. Timpa dengan data halaman tersimpan yang dipilih untuk diedit?")) return;
+        
+        current = JSON.parse(JSON.stringify(page));
+        editingIndex = i;
+        renderEditor();
+        window.scrollTo({top:0,behavior:"smooth"});
+      });
+
+      const icon=document.createElement("div");icon.className="saved-icon";icon.textContent=String(i+1).padStart(2,"0");
+      const info=document.createElement("div");info.className="saved-info";
+      const title=document.createElement("strong");const first=page.cells.find(c=>(c.values?.Article||"").trim());title.textContent=first?.values?.Article||`Halaman ${i+1}`;
+      const meta=document.createElement("span");meta.textContent=`${filledCells(page)} kotak · ${page.cells.filter(c=>c.image).length} gambar ${editingIndex === i ? '• (Sedang diedit)' : '• (Klik untuk edit)'}`;
+      info.append(title,meta);
+      
+      const del=document.createElement("button");del.type="button";del.textContent="Hapus";del.title=`Hapus halaman ${i+1}`;
+      del.addEventListener("click",(e)=>{
+        e.stopPropagation();
+        if(confirm(`Hapus halaman tersimpan ${i+1}?`)){
+          if(editingIndex === i) editingIndex = null;
+          else if(editingIndex > i) editingIndex--;
+          savedPages.splice(i,1);
+          renderEditor();
+        }
+      });
+      item.append(icon,info,del);list.append(item);
+    });
+  }
+
+  function finishPage(){
+    if(!pageHasData(current)){alert("Halaman masih kosong. Isi minimal satu data atau lampiran sebelum menyimpan.");return;}
+    
+    if(editingIndex !== null) {
+      savedPages[editingIndex] = JSON.parse(JSON.stringify(current));
+      alert(`Halaman ${editingIndex + 1} berhasil diperbarui!`);
+      editingIndex = null;
+    } else {
+      savedPages.push(JSON.parse(JSON.stringify(current)));
+    }
+
+    current = makeBlankPage();
+    activeCell = 0;
+    renderEditor();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function clearCurrent(){
+    if(!pageHasData(current)||confirm("Kosongkan semua input dan gambar pada halaman aktif? Halaman tersimpan tidak akan terhapus.")){
+      current = makeBlankPage();
+      editingIndex = null;
+      activeCell = 0;
+      renderEditor();
+    }
+  }
+
+  // PERBAIKAN UTAMA: Render dengan jeda tunggu gambar agar termuat sempurna sebelum print
+  function generatePrintHTML(pagesToPrint) {
+    const container = document.getElementById("printPages");
+    container.innerHTML = "";
+    
+    pagesToPrint.forEach(page => {
+      const p = document.createElement("section");
+      p.className = "print-sheet";
+      page.cells.forEach(cell => {
+        const box = document.createElement("div");
+        box.className = "print-cell";
+        FIELD_NAMES.forEach(name => {
+          const row = document.createElement("div");
+          row.className = "print-field";
+          const lab = document.createElement("label");
+          lab.textContent = name + " :";
+          const val = document.createElement("div");
+          val.className = "print-value";
+          val.textContent = cell.values?.[name] || "";
+          row.append(lab, val);
+          box.append(row);
+        });
+        const imageBox = document.createElement("div");
+        imageBox.className = "print-image";
+        if (cell.image) {
+          const img = document.createElement("img");
+          img.src = cell.image;
+          img.alt = "Lampiran";
+          imageBox.append(img);
+        }
+        box.append(imageBox);
+        p.append(box);
+      });
+      container.append(p);
+    });
+  }
+
+  function triggerPrintWithDelay() {
+    // Beri jeda 400ms agar browser selesai menyalin gambar Base64 ke dalam print DOM sebelum jendela print muncul
+    setTimeout(() => {
+      window.print();
+    }, 400);
+  }
+
+  function exportCurrentPagePdf(){
+    if(!pageHasData(current)){alert("Halaman aktif masih kosong. Isi data terlebih dahulu sebelum mengekspor.");return;}
+    generatePrintHTML([JSON.parse(JSON.stringify(current))]);
+    triggerPrintWithDelay();
+  }
+
+  function exportAllPdf(){
+    const pages = savedPages.map(p => JSON.parse(JSON.stringify(p)));
+    if(pageHasData(current)) pages.push(JSON.parse(JSON.stringify(current)));
+    if(!pages.length){alert("Belum ada data untuk diekspor.");return;}
+    generatePrintHTML(pages);
+    triggerPrintWithDelay();
+  }
+
+  async function backupNativeSave() {
+    const content = JSON.stringify({current, savedPages, editingIndex}, null, 2);
+    const dateStr = new Date().toISOString().slice(0,10);
+    const defaultName = `subcont-backup-${dateStr}.json`;
+
+    if (window.showSaveFilePicker) {
+      try {
+        const opts = {
+          suggestedName: defaultName,
+          types: [{
+            description: 'JSON Files',
+            accept: {'application/json': ['.json']},
+          }],
+        };
+        const handle = await window.showSaveFilePicker(opts);
+        const writable = await handle.createWritable();
+        await writable.write(content);
+        await writable.close();
+        return;
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Gagal menyimpan via native picker:', err);
+        }
+        return;
+      }
+    }
+
+    const blob = new Blob([content], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = defaultName;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  document.getElementById("saveJsonBtn").addEventListener("click", backupNativeSave);
+
+  function restoreBackup(file){
+    const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);if(!data.current?.cells||!Array.isArray(data.savedPages))throw new Error("Format tidak sesuai");if(!confirm("Pulihkan backup? Data saat ini akan diganti dengan isi backup."))return;current=data.current;savedPages=data.savedPages;editingIndex=null;renderEditor();alert("Backup berhasil dipulihkan.");}catch(e){alert("File backup tidak valid atau rusak.");}};reader.readAsText(file);
+  }
+
+  document.getElementById("finishBtn").addEventListener("click",finishPage);
+  document.getElementById("newBtn").addEventListener("click",clearCurrent);
+  document.getElementById("pdfCurrentBtn").addEventListener("click",exportCurrentPagePdf);
+  document.getElementById("pdfSideBtn").addEventListener("click",exportAllPdf);
+  document.getElementById("clearAllBtn").addEventListener("click",()=>{if(confirm("Hapus SEMUA halaman tersimpan dan input saat ini? Tindakan ini tidak bisa dibatalkan.")){savedPages=[];current=makeBlankPage();editingIndex=null;renderEditor();}});
+  document.getElementById("loadJsonBtn").addEventListener("click",()=>document.getElementById("jsonFile").click());
+  document.getElementById("jsonFile").addEventListener("change",e=>{if(e.target.files[0])restoreBackup(e.target.files[0]);e.target.value="";});
+  
+  renderEditor();
+})();
+</script>
+</body>
+</html>
