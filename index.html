@@ -81,7 +81,7 @@ button:active{transform:translateY(0)}
   box-sizing: border-box; border-radius: 6px; border: 1px solid #cbd5e1;
 }
 .cell{border:.25mm solid #334155;min-width:0;min-height:0;padding:1.5mm 2mm;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;background:white}
-.field{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:4px;font-size:clamp(7px, 0.85vw, 10pt);line-height:1.15;position:relative;}
+.field{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:4px;font-size:clamp(6.5px, 0.78vw, 9pt);line-height:1.15;position:relative;}
 .field label{white-space:nowrap;color:#334155;font-weight:600}
 .field input, .field select{
   width:100%; min-width:0; border:0; border-bottom:1px dotted #cbd5e1; background:transparent;
@@ -89,14 +89,14 @@ button:active{transform:translateY(0)}
 }
 .field input:focus, .field select:focus{border-bottom:1.5px solid var(--brand);background:var(--brand-soft)}
 .color-dropdown{
-  position:absolute;top:100%;left:0;right:0;max-height:150px;overflow-y:auto;
+  position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;
   background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);
   box-shadow:0 10px 25px rgba(15,23,42,0.1);z-index:99;display:none;padding:4px;
 }
 .color-dropdown::-webkit-scrollbar{width:4px}
 .color-dropdown::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
 .color-dropdown div{
-  padding:7px 10px;font-size:11.5px;font-weight:600;cursor:pointer;border-radius:6px;
+  padding:6px 8px;font-size:11px;font-weight:600;cursor:pointer;border-radius:5px;
   transition:all .12s ease;display:flex;align-items:center;justify-content:space-between;color:#334155;
 }
 .color-dropdown div:hover{background:var(--brand-soft);color:var(--brand);font-weight:700}
@@ -108,7 +108,7 @@ button:active{transform:translateY(0)}
 .image-tools{position:absolute;right:3px;top:3px;display:flex;gap:3px}
 .image-tools button{padding:2px 5px;font-size:8.5px;border-radius:4px;background:#fff;border:1px solid var(--line);color:#334155;font-weight:600}
 .btn-clear-cell{
-  width: 100%; padding: 4px; font-size: 8.5px; font-weight: 700; border-radius: 5px;
+  width: 100%; padding: 3px; font-size: 8px; font-weight: 700; border-radius: 5px;
   background: var(--danger-bg); border: 1px solid #fecdd3; color: var(--danger-text); cursor: pointer;
   display: flex; align-items: center; justify-content: center; gap: 4px; transition: all .15s;
 }
@@ -128,10 +128,10 @@ button:active{transform:translateY(0)}
   .print-sheet{width:297mm;height:210mm;padding:8mm 10mm 15mm;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));background:white;page-break-after:always;break-after:page;overflow:hidden;box-sizing:border-box;}
   .print-sheet:last-child{page-break-after:auto;break-after:auto}
   .print-cell{border:.25mm solid #334155;min-width:0;min-height:0;padding:1.5mm 2mm;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box;}
-  .print-field{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px;align-items:baseline;font-size:9.5pt;line-height:1.15}
+  .print-field{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px;align-items:baseline;font-size:8.5pt;line-height:1.15}
   .print-field label{white-space:nowrap;font-weight:600;color:#0f172a}
   .print-value{min-width:0;overflow-wrap:anywhere;white-space:pre-wrap;border-bottom:1px dotted #cbd5e1;font-size:inherit;font-weight:700;color:#0f172a}
-  .print-image{height:22mm;min-height:10mm;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .print-image{height:20mm;min-height:10mm;display:flex;align-items:center;justify-content:center;overflow:hidden}
   .print-image img{max-width:100%;max-height:100%;object-fit:contain}
 }
 </style>
@@ -169,7 +169,7 @@ button:active{transform:translateY(0)}
           <div class="step"><span class="step-num">2</span> Selesai &amp; simpan</div><div class="step-line"></div>
           <div class="step"><span class="step-num">3</span> Gabungkan PDF</div>
         </div>
-        <div class="tip"><strong>Mode Edit:</strong> Klik halaman pada panel samping untuk mengeditnya. Tombol utama akan berubah menjadi "Update Halaman Saat Ini" secara otomatis.</div>
+        <div class="tip"><strong>Solusi 1 (Dua Warna):</strong> Kolom Color kini dipisah menjadi <strong>Color 1</strong> dan <strong>Color 2</strong>. Tekan <strong>Tab</strong> pada pencarian untuk memilih opsi pertama dari daftar live Coloro.</div>
       </section>
       <div class="preview-title"><h2>Preview lembar A4</h2><span>Halaman aktif · 4 kolom × 2 baris (Responsif)</span></div>
       <div class="sheet-wrap"><div id="sheet" aria-label="Lembar input A4"></div></div>
@@ -232,7 +232,8 @@ button:active{transform:translateY(0)}
 
 <script>
 (() => {
-  const FIELD_NAMES = ["Article","Size","Stage","Season","Component","Process","Color","QTY","Supplier"];
+  // SOLUSI 1: Memisahkan Color 1 dan Color 2
+  const FIELD_NAMES = ["Article","Size","Stage","Season","Component","Process","Color 1","Color 2","QTY","Supplier"];
   const STAGE_OPTIONS = ["PROTO 0", "GTM 1", "GTM 2", "LINE CFM", "RELINE CFM", "PROD CFM", "PULLOVER"];
   const SUPPLIER_OPTIONS = ["INHOUSE", "CBMJ", "SUJA", "TLI", "TSI"];
   
@@ -390,12 +391,12 @@ button:active{transform:translateY(0)}
             syncCommonFields("Season", input.value);
           });
         }
-        else if(name === "Color") {
+        else if(name === "Color 1" || name === "Color 2") {
           input=document.createElement("input");
           input.type="text";
           input.value=cell.values[name]||"";
           input.autocomplete="off";
-          input.placeholder="Cari Coloro...";
+          input.placeholder=name === "Color 1" ? "Cari Coloro utama..." : "Cari Coloro ke-2 (opsional)...";
           input.setAttribute("aria-label",`Kotak ${index+1} ${name}`);
           
           const dropdown = document.createElement("div");
@@ -459,6 +460,32 @@ button:active{transform:translateY(0)}
             refreshUI();
           });
 
+          // FITUR TAB: Memilih item teratas dari dropdown otomatis
+          input.addEventListener("keydown", (e) => {
+            if (e.key === "Tab") {
+              const firstOpt = dropdown.querySelector("div");
+              if (firstOpt && dropdown.style.display === "block" && !firstOpt.textContent.includes("tidak ditemukan") && !firstOpt.textContent.includes("Memuat")) {
+                e.preventDefault();
+                const qText = input.value.trim().toLowerCase();
+                const matchedItem = COLORO_DATABASE.find(item => 
+                  `${item.name} - ${item.code}`.toLowerCase().includes(qText)
+                ) || COLORO_DATABASE[0];
+
+                if (matchedItem) {
+                  const fullText = `${matchedItem.name} - ${matchedItem.code}`;
+                  input.value = fullText;
+                  cell.values[name] = fullText;
+                  dropdown.style.display = "none";
+                  refreshUI();
+
+                  const allInputs = Array.from(sheet.querySelectorAll('input, select'));
+                  const nextIndex = allInputs.indexOf(input) + 1;
+                  if (allInputs[nextIndex]) allInputs[nextIndex].focus();
+                }
+              }
+            }
+          });
+
           input.addEventListener("blur", () => {
             setTimeout(() => { dropdown.style.display = "none"; }, 200);
             activeDropdownRenderer = null;
@@ -471,12 +498,10 @@ button:active{transform:translateY(0)}
           input.addEventListener("input",()=>{cell.values[name]=input.value;refreshUI();});
         }
 
-        if(name !== "Color" && name !== "Supplier" && name !== "Stage") {
+        if(!name.startsWith("Color") && name !== "Supplier" && name !== "Stage") {
           input.addEventListener("focus",()=>activeCell=index);
           row.append(label,input);
-        } else if(name === "Supplier") {
-          row.append(label,input);
-        } else if(name === "Stage") {
+        } else if(name === "Supplier" || name === "Stage") {
           row.append(label,input);
         }
         
@@ -606,7 +631,6 @@ button:active{transform:translateY(0)}
     }
   }
 
-  // PERBAIKAN UTAMA: Render dengan jeda tunggu gambar agar termuat sempurna sebelum print
   function generatePrintHTML(pagesToPrint) {
     const container = document.getElementById("printPages");
     container.innerHTML = "";
@@ -644,7 +668,6 @@ button:active{transform:translateY(0)}
   }
 
   function triggerPrintWithDelay() {
-    // Beri jeda 400ms agar browser selesai menyalin gambar Base64 ke dalam print DOM sebelum jendela print muncul
     setTimeout(() => {
       window.print();
     }, 400);
